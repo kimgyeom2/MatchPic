@@ -11,19 +11,19 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
-    ImageView start,how,board,iv1,iv2,iv3,iv4,iv5,ele,mon,lion,pig,fro;
+    ImageView start,how,board,iv1,iv2,iv3,iv4,iv5;
 
     SoundPool sp;
     int sdStart,sdAgain,sdGood,sdSelect;
-    Integer p=0;
-    ArrayList<Integer> nums=new ArrayList<>();
-    int[] imgs2=new int[]{R.drawable.b_ele,R.drawable.b_frog,
-            R.drawable.b_lion,R.drawable.b_monkey,R.drawable.b_pig};
-    int k=0;
+
+    ArrayList<Integer> arr=new ArrayList<>();
+    ArrayList<Integer> arr2=new ArrayList<>();
+    ArrayList<ImageView> ivs=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +37,12 @@ public class MainActivity extends AppCompatActivity {
         iv4=findViewById(R.id.iv4);
         iv5=findViewById(R.id.iv5);
 
+        ivs.add(iv1);
+        ivs.add(iv2);
+        ivs.add(iv3);
+        ivs.add(iv4);
+        ivs.add(iv5);
+
         SoundPool.Builder builder2=new SoundPool.Builder();
         sp=builder2.build();
 
@@ -45,30 +51,26 @@ public class MainActivity extends AppCompatActivity {
         sdGood=sp.load(this,R.raw.s_goodjob,0);
         sdSelect=sp.load(this,R.raw.s_select,0);
 
-        ImageView[] ivs=new ImageView[]{iv1,iv2,iv3,iv4,iv5};
+        arr.add(R.drawable.a_ele);
+        arr.add(R.drawable.a_lion);
+        arr.add(R.drawable.a_monkey);
+        arr.add(R.drawable.a_pig);
+        arr.add(R.drawable.a_frog);
+        arr2.add(R.drawable.b_ele);
+        arr2.add(R.drawable.b_lion);
+        arr2.add(R.drawable.b_monkey);
+        arr2.add(R.drawable.b_pig);
+        arr2.add(R.drawable.b_frog);
 
-        int[] imgs=new int[]{R.drawable.a_ele,R.drawable.a_frog,
-                R.drawable.a_lion,R.drawable.a_monkey,R.drawable.a_pig};
-
-
-        for(int n=0;n<=4;n++) {
-            nums.add(n);
-
-        }
         View.OnClickListener listener=new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 sp.play(sdSelect,1,1,1,0,1);
-                if(p==view.getTag()) {
-                    k++;
-                    p++;
-                    board.setImageResource(imgs2[k]);
+                if(true) {
+
                     sp.play(sdGood,1,1,1,0,1);
-                    Collections.shuffle(nums);
-                    for(int n=0;n<=4;n++) {
-                        ivs[nums.get(n)].setTag(n);
-                        ivs[nums.get(n)].setImageResource(imgs[n]);
-                    }
+
+
                 }else{
                     sp.play(sdAgain,1,1,1,0,1);
                 }
@@ -77,15 +79,20 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int n=0;n<=4;n++) {
-                    ivs[nums.get(n)].setTag(n);
-                    ivs[nums.get(n)].setImageResource(imgs[n]);
-                    ivs[n].setOnClickListener(listener);
+                Collections.shuffle(arr);
+                Collections.shuffle(arr2);
+                for (int a=0;a<5;a++){
+                    ivs.get(a).setImageResource(arr.get(a));
                 }
-                how.setVisibility(View.GONE);
-                board.setImageResource(imgs2[k]);
-                sp.play(sdStart,1,1,1,0,1);
+                iv1.setTag(arr.get(0));
+                iv2.setTag(arr.get(1));
+                iv3.setTag(arr.get(2));
+                iv4.setTag(arr.get(3));
+                iv5.setTag(arr.get(4));
 
+
+
+                board.setImageResource(arr2.get(0));
             }
         });
 
