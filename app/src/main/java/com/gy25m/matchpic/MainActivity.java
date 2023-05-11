@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<Integer> arr=new ArrayList<>();
     ArrayList<Integer> arr2=new ArrayList<>();
+
     ArrayList<ImageView> ivs=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sp.play(sdSelect,1,1,1,0,1);
-                if(true) {
+                if(board.getTag().toString().replace("b","a").equals(view.getTag())) {
 
+
+                    Toast.makeText(MainActivity.this, "good", Toast.LENGTH_SHORT).show();
                     sp.play(sdGood,1,1,1,0,1);
 
 
@@ -79,20 +83,18 @@ public class MainActivity extends AppCompatActivity {
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Collections.shuffle(arr);
+                Collections.shuffle(ivs);
                 Collections.shuffle(arr2);
                 for (int a=0;a<5;a++){
                     ivs.get(a).setImageResource(arr.get(a));
+                    ivs.get(a).setTag(arr.get(a));
                 }
-                iv1.setTag(arr.get(0));
-                iv2.setTag(arr.get(1));
-                iv3.setTag(arr.get(2));
-                iv4.setTag(arr.get(3));
-                iv5.setTag(arr.get(4));
-
 
 
                 board.setImageResource(arr2.get(0));
+                board.setTag(arr2.get(0));
+//                start.setVisibility(View.GONE);
+//                how.setVisibility(View.GONE);
             }
         });
 
